@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<title>Nêlêmwa & Nixumwak</title>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:#0D1F2D;font-family:'Inter',sans-serif;color:#FAFAF8;min-height:100vh;}
+button{font-family:'Inter',sans-serif;cursor:pointer;border:none;background:none;}
+input{font-family:'Josefin Sans',sans-serif;color:#FAFAF8;}
+input:focus{outline:none;}
+.screen{display:none;min-height:100vh;}
+.screen.active{display:block;}
+
+/* ── HEADER ── */
+.top-bar{background:#1A3448;padding:20px 18px 14px;border-bottom:1px solid #ffffff11;}
+.top-bar .back{color:#12B5C8;font-size:14px;margin-bottom:8px;display:block;}
+.top-bar h2{color:#FAFAF8;font-family:'Josefin Sans',sans-serif;font-size:22px;}
+
+/* ── HERO ── */
+.hero{position:relative;background:linear-gradient(135deg,#0A7E8C,#1A3448);padding:52px 22px 36px;text-align:center;overflow:hidden;}
+.hero-kanak{position:absolute;top:0;left:0;width:100%;height:100%;opacity:.05;pointer-events:none;}
+.hero-label{font-size:12px;color:#12B5C8;letter-spacing:4px;font-family:'Josefin Sans',sans-serif;margin-bottom:8px;}
+.hero h1{font-size:clamp(2rem,9vw,3rem);font-family:'Josefin Sans',sans-serif;font-weight:700;line-height:1.1;margin-bottom:12px;}
+.hero h1 span{color:#12B5C8;}
+.hero p{color:#F2E8D5;opacity:.8;font-size:14px;max-width:340px;margin:0 auto 24px;}
+.hero-stats{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;}
+.hero-stat-v{font-size:26px;font-family:'Josefin Sans',sans-serif;font-weight:700;}
+.hero-stat-l{font-size:11px;color:#12B5C8;letter-spacing:2px;}
+.wave{display:block;width:100%;height:32px;}
+
+/* ── MENU GRID ── */
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 14px;max-width:600px;margin:0 auto;}
+.menu-btn{background:#1A3448;border-radius:14px;padding:18px 14px;text-align:left;transition:transform .15s;}
+.menu-btn:active{transform:scale(.97);}
+.menu-btn .ico{font-size:26px;margin-bottom:8px;}
+.menu-btn .lbl{font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:14px;}
+.menu-btn .sub{font-size:12px;margin-top:3px;}
+.start-btn{display:block;width:calc(100% - 28px);margin:14px auto 28px;max-width:572px;padding:16px;border-radius:13px;font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px;color:#fff;background:linear-gradient(90deg,#0A7E8C,#12B5C8);}
+
+/* ── LESSON CARDS ── */
+.lesson-card{width:100%;background:#1A3448;border-radius:14px;padding:18px;margin-bottom:10px;text-align:left;display:flex;align-items:center;gap:12px;transition:transform .15s;}
+.lesson-card:active{transform:scale(.98);}
+.lesson-emoji{width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.lesson-info{flex:1;}
+.lesson-title{font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:15px;margin-bottom:4px;}
+.lesson-meta{color:#888;font-size:12px;}
+.badge{display:inline-block;border-radius:99px;padding:2px 9px;font-size:11px;font-family:'Josefin Sans',sans-serif;font-weight:700;letter-spacing:.5px;margin-right:4px;}
+.prog-bar-wrap{background:#ffffff22;border-radius:99px;height:7px;overflow:hidden;margin-top:7px;}
+.prog-bar-fill{height:100%;border-radius:99px;transition:width .4s;}
+
+/* ── TABS ── */
+.tab-header{position:relative;overflow:hidden;}
+.tab-kanak{position:absolute;top:0;left:0;width:100%;height:100%;opacity:.05;pointer-events:none;}
+.tab-header-inner{position:relative;z-index:1;padding:22px 16px 0;}
+.tab-header-inner .back{color:rgba(255,255,255,.8);font-size:14px;margin-bottom:10px;display:block;}
+.tab-header-inner .emoji{font-size:36px;margin-bottom:6px;}
+.tab-header-inner h2{font-family:'Josefin Sans',sans-serif;font-size:22px;margin-bottom:8px;}
+.tabs-row{display:flex;gap:4px;padding:16px 0 0;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tab-btn{flex-shrink:0;padding:8px 14px;border-radius:10px 10px 0 0;font-size:13px;font-weight:600;text-transform:capitalize;opacity:.7;color:white;border:1px solid rgba(255,255,255,.5);background:transparent;}
+.tab-btn.active{opacity:1;background:white;}
+.tab-content{padding:18px 14px 32px;max-width:620px;margin:0 auto;}
+
+/* ── VOCAB TABLE ── */
+.vocab-head{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:6px;}
+.vocab-head span{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:6px 4px;}
+.vocab-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-radius:8px;padding:9px 6px;margin-bottom:3px;}
+.vocab-row.alt{background:#1A3448;}
+.vocab-p{color:#12B5C8;font-weight:600;font-size:13px;}
+.vocab-k{font-size:13px;}
+.vocab-fr{color:#F2E8D5;font-size:12px;}
+
+/* ── EXPR ── */
+.expr-card{background:#1A3448;border-radius:12px;padding:14px 16px;margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+.expr-word{font-family:'Josefin Sans',sans-serif;font-size:18px;font-weight:700;}
+.expr-trad{font-size:13px;color:#F2E8D5;}
+
+/* ── DIFF TABLE ── */
+.diff-info{background:#1A344888;border-radius:9px;padding:10px 14px;margin-bottom:14px;color:#12B5C8;font-size:13px;}
+.diff-row{display:grid;grid-template-columns:1fr 1fr 1fr;background:#1A3448;border-radius:8px;padding:11px 6px;margin-bottom:7px;}
+.diff-lesson{font-size:10px;color:#555;margin-top:2px;}
+
+/* ── QUIZ ── */
+.quiz-top{background:#1A3448;padding:14px 18px;border-bottom:1px solid #ffffff11;}
+.quiz-top-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.quiz-close{font-size:20px;color:#12B5C8;}
+.quiz-counter{font-family:'Josefin Sans',sans-serif;font-weight:700;}
+.quiz-pts{color:#C9943A;font-weight:700;}
+.quiz-body{padding:22px 16px;max-width:520px;margin:0 auto;}
+.quiz-qbox{background:#1A3448;border-radius:14px;padding:22px 18px;margin-bottom:18px;}
+.quiz-q{font-size:17px;font-weight:600;line-height:1.5;}
+.opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.opt-btn{background:#1A3448;border:2px solid #ffffff22;border-radius:12px;padding:13px 10px;text-align:left;font-size:14px;font-weight:600;color:#FAFAF8;transition:all .2s;}
+.opt-btn.selected{background:#0A7E8C33;border-color:#0A7E8C;}
+.opt-btn.correct{background:#2D5A2744;border-color:#2D5A27;color:#9ef;}
+.opt-btn.wrong{background:#D4603A33;border-color:#D4603A;color:#E8845F;}
+.opt-letter{font-family:'Josefin Sans',sans-serif;margin-right:6px;}
+.tf-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.tf-btn{border:2px solid #ffffff22;border-radius:14px;padding:20px;font-size:17px;font-weight:700;font-family:'Josefin Sans',sans-serif;background:#1A3448;color:#FAFAF8;transition:all .2s;}
+.tf-btn.selected{border-color:#0A7E8C;background:#0A7E8C33;}
+.tf-btn.correct{background:#2D5A2744;border-color:#2D5A27;color:#9ef;}
+.tf-btn.wrong{background:#D4603A33;border-color:#D4603A;}
+.fill-input{width:100%;background:#1A3448;border:2px solid #0A7E8C;border-radius:12px;padding:14px 16px;font-size:16px;font-family:'Josefin Sans',sans-serif;color:#FAFAF8;}
+.fill-input.correct{border-color:#2D5A27;}
+.fill-input.wrong{border-color:#D4603A;}
+.fill-answer{margin-top:9px;padding:11px;background:#2D5A2722;border-radius:9px;color:#9ef;font-size:14px;}
+.feedback{margin-top:14px;padding:13px;border-radius:11px;font-weight:700;font-size:15px;}
+.feedback.ok{background:#2D5A2733;border:1px solid #2D5A27;color:#9ef;}
+.feedback.ko{background:#D4603A33;border:1px solid #D4603A;color:#E8845F;}
+.action-btn{width:100%;margin-top:18px;padding:15px;border-radius:12px;font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;color:#fff;transition:opacity .2s;}
+.action-btn:disabled{opacity:.35;}
+
+/* ── RESULT ── */
+.result-screen{min-height:100vh;background:#0D1F2D;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
+.result-emoji{font-size:72px;margin-bottom:14px;}
+.result-grade{font-family:'Josefin Sans',sans-serif;font-size:30px;font-weight:700;margin-bottom:6px;}
+.result-pct{font-size:56px;font-family:'Josefin Sans',sans-serif;font-weight:700;}
+.result-sub{color:#888;margin:8px 0 22px;font-size:15px;}
+.result-list{background:#1A3448;border-radius:14px;padding:14px;margin-bottom:20px;width:100%;max-width:420px;max-height:220px;overflow-y:auto;}
+.result-item{display:flex;align-items:flex-start;gap:9px;padding:5px 0;font-size:12px;line-height:1.4;border-bottom:1px solid #ffffff11;}
+.result-item:last-child{border-bottom:none;}
+.result-btns{display:flex;gap:10px;width:100%;max-width:420px;}
+.result-btns button{flex:1;border-radius:12px;padding:14px;font-weight:700;font-family:'Josefin Sans',sans-serif;font-size:15px;}
+
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.stat-card{background:#1A3448;border-radius:14px;padding:18px;text-align:center;}
+.stat-val{font-size:26px;font-family:'Josefin Sans',sans-serif;font-weight:700;}
+.stat-lbl{color:#888;font-size:12px;margin-top:4px;}
+.stat-ico{font-size:26px;margin-bottom:4px;}
+.lesson-stat{background:#1A3448;border-radius:12px;padding:13px 14px;margin-bottom:8px;}
+.lesson-stat-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;flex-wrap:wrap;gap:4px;}
+
+/* ── REVISION ── */
+.rev-card{width:100%;background:#1A3448;border-radius:14px;padding:20px 18px;margin-bottom:11px;text-align:left;display:flex;align-items:center;gap:14px;}
+.rev-card:active{transform:scale(.98);}
+.rev-ico{font-size:34px;}
+.rev-title{font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:15px;}
+.rev-sub{font-size:12px;margin-top:3px;}
+.rev-arrow{margin-left:auto;font-size:18px;}
+
+/* ── SPECIES ── */
+.species-cat-label{color:#888;font-size:11px;letter-spacing:2px;font-weight:700;padding:12px 4px 5px;text-transform:uppercase;}
+.species-card{width:100%;background:#1A3448;border-radius:14px;margin-bottom:10px;text-align:left;display:flex;align-items:stretch;overflow:hidden;}
+.species-card:active{transform:scale(.98);}
+.species-img{width:88px;flex-shrink:0;background-size:cover;background-position:center;}
+.species-img-placeholder{width:88px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:30px;}
+.species-info{padding:11px 12px;flex:1;}
+.species-name{font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:14px;margin-bottom:2px;}
+.species-sci{color:#777;font-size:11px;font-style:italic;margin-bottom:5px;}
+.species-words{display:flex;gap:6px;flex-wrap:wrap;}
+.species-arrow{color:#888;font-size:16px;padding:0 12px;display:flex;align-items:center;}
+.species-detail-img{width:100%;max-height:240px;object-fit:cover;display:block;}
+.species-detail-body{padding:18px 16px;}
+.species-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
+.species-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;background:#1A3448;border-radius:12px;padding:16px;margin-bottom:12px;}
+.species-grid-lbl{font-size:11px;letter-spacing:1px;margin-bottom:3px;}
+.species-grid-val{font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:15px;}
+.species-en{color:#888;font-size:12px;font-style:italic;border-top:1px solid #ffffff11;padding-top:10px;margin-top:6px;}
+.species-desc-box{background:#1A3448;border-radius:12px;padding:16px;color:#F2E8D5;line-height:1.8;font-size:14px;}
+.species-source{color:#333;font-size:11px;font-style:italic;text-align:center;margin-top:10px;}
+
+/* ── EXPRS SCREEN ── */
+.expr-source{color:#555;font-size:11px;margin-top:4px;}
+
+/* ── DIFF SCREEN ── */
+.all-diff-head{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:8px;padding:0 6px;}
+.all-diff-head span{font-size:10px;font-weight:700;letter-spacing:.5px;}
+.all-diff-row{display:grid;grid-template-columns:1fr 1fr 1fr;background:#1A3448;border-radius:9px;padding:11px 6px;margin-bottom:7px;}
+
+/* ── CONTENT WRAPPER ── */
+.content-wrap{padding:14px 14px 32px;max-width:620px;margin:0 auto;}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════ SCREENS -->
+
+<!-- HOME -->
+<div id="s-home" class="screen active">
+  <div class="hero">
+    <svg class="hero-kanak" xmlns="http://www.w3.org/2000/svg">
+      <defs><pattern id="kp" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+        <polygon points="30,5 55,20 55,40 30,55 5,40 5,20" fill="none" stroke="white" stroke-width="1"/>
+        <line x1="30" y1="5" x2="30" y2="55" stroke="white" stroke-width=".5"/>
+        <line x1="5" y1="20" x2="55" y2="40" stroke="white" stroke-width=".5"/>
+        <line x1="55" y1="20" x2="5" y2="40" stroke="white" stroke-width=".5"/>
+      </pattern></defs>
+      <rect width="100%" height="100%" fill="url(#kp)"/>
+    </svg>
+    <div style="position:relative;z-index:1">
+      <div class="hero-label">LANGUES KANAK · NOUVELLE-CALÉDONIE</div>
+      <h1>Nêlêmwa<br><span>& Nixumwak</span></h1>
+      <p>Dictionnaire Nêlêmwa–Nixumwak–Français–Anglais · Langues kanak de Bwapanu.</p>
+      <div class="hero-stats">
+        <div><div class="hero-stat-v" id="h-done">0/7</div><div class="hero-stat-l">LEÇONS</div></div>
+        <div><div class="hero-stat-v" id="h-pts">0</div><div class="hero-stat-l">POINTS</div></div>
+        <div><div class="hero-stat-v">194</div><div class="hero-stat-l">MOTS</div></div>
+      </div>
+    </div>
+  </div>
+  <svg class="wave" viewBox="0 0 1200 60" preserveAspectRatio="none">
+    <path d="M0,30 C200,60 400,0 600,30 C800,60 1000,0 1200,30 L1200,60 L0,60 Z" fill="#0D1F2D"/>
+  </svg>
+  <div style="padding:0 14px 10px;max-width:600px;margin:0 auto;">
+    <div class="menu-grid" id="menu-grid"></div>
+    <button class="start-btn" onclick="go('s-lessons')">COMMENCER L'APPRENTISSAGE →</button>
+  </div>
+</div>
+
+<!-- LESSONS -->
+<div id="s-lessons" class="screen">
+  <div class="top-bar">
+    <button class="back" onclick="go('s-home')">← Retour</button>
+    <h2>📖 Leçons</h2>
+  </div>
+  <div class="content-wrap" id="lessons-list"></div>
+</div>
+
+<!-- LESSON DETAIL -->
+<div id="s-detail" class="screen">
+  <div id="detail-header" class="tab-header"></div>
+  <div class="tab-content" id="detail-content"></div>
+</div>
+
+<!-- QUIZ -->
+<div id="s-quiz" class="screen">
+  <div class="quiz-top">
+    <div class="quiz-top-row">
+      <button class="quiz-close" id="quiz-close">✕</button>
+      <span class="quiz-counter" id="quiz-counter">1 / 6</span>
+      <span class="quiz-pts" id="quiz-pts">0 pts</span>
+    </div>
+    <div class="prog-bar-wrap"><div class="prog-bar-fill" id="quiz-prog" style="width:0%;background:#0A7E8C"></div></div>
+  </div>
+  <div class="quiz-body" id="quiz-body"></div>
+</div>
+
+<!-- RESULT -->
+<div id="s-result" class="screen result-screen">
+  <div class="result-emoji" id="res-emoji"></div>
+  <div class="result-grade" id="res-grade"></div>
+  <div class="result-pct" id="res-pct"></div>
+  <div class="result-sub" id="res-sub"></div>
+  <div class="result-list" id="res-list"></div>
+  <div class="result-btns">
+    <button id="res-retry" style="border:2px solid #0A7E8C;color:#0A7E8C;">RÉESSAYER</button>
+    <button id="res-done" style="background:#0A7E8C;color:white;">TERMINER</button>
+  </div>
+</div>
+
+<!-- EXPRESSIONS -->
+<div id="s-exprs" class="screen">
+  <div class="top-bar">
+    <button class="back" onclick="go('s-home')">← Retour</button>
+    <h2>💬 Expressions</h2>
+  </div>
+  <div class="content-wrap" id="exprs-list"></div>
+</div>
+
+<!-- DIFFERENCES -->
+<div id="s-diff" class="screen">
+  <div class="top-bar">
+    <button class="back" onclick="go('s-home')">← Retour</button>
+    <h2>🔀 Nêlêmwa (P) / Nixumwak (K)</h2>
+  </div>
+  <div class="content-wrap" id="diff-list"></div>
+</div>
+
+<!-- STATS -->
+<div id="s-stats" class="screen">
+  <div class="top-bar">
+    <button class="back" onclick="go('s-home')">← Retour</button>
+    <h2>📊 Statistiques</h2>
+  </div>
+  <div class="content-wrap" id="stats-body"></div>
+</div>
+
+<!-- REVISION -->
+<div id="s-revision" class="screen">
+  <div class="top-bar">
+    <button class="back" onclick="go('s-home')">← Retour</button>
+    <h2>🔁 Révisions</h2>
+  </div>
+  <div class="content-wrap" id="rev-body"></div>
+</div>
+
+<!-- SPECIES LIST -->
+<div id="s-species" class="screen">
+  <div class="top-bar">
+    <button class="back" onclick="go('s-home')">← Retour</button>
+    <h2>🔬 Faune & Flore</h2>
+  </div>
+  <div class="content-wrap" id="species-list"></div>
+</div>
+
+<!-- SPECIES DETAIL -->
+<div id="s-species-detail" class="screen">
+  <div class="top-bar">
+    <button class="back" onclick="go('s-species')">← Retour à la liste</button>
+    <h2 id="sp-detail-title"></h2>
+  </div>
+  <div id="sp-detail-body"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════════════
+const T={lagon:"#0A7E8C",lagonL:"#12B5C8",foret:"#2D5A27",corail:"#D4603A",corailL:"#E8845F",nuit:"#0D1F2D",nuitM:"#1A3448",blanc:"#FAFAF8",gold:"#C9943A",sable:"#F2E8D5"};
+
+const LESSONS=[
+  {id:1,level:1,title:"Les Personnes & Famille",emoji:"👥",theme:T.lagon,
+   cours:"Le vocabulaire des personnes est fondamental. En Nêlêmwa/Nixumwak, les relations de parenté sont très précises et distinguent les liens maternels et paternels. « aguk » (var. agu) désigne l'homme, la personne, les gens du pays.",
+   vocabulaire:[
+    {p:"aguk",k:"aguk",fr:"homme, personne, gens"},
+    {p:"ak",k:"ak",fr:"homme, mâle"},
+    {p:"âlô",k:"âlô",fr:"enfant, jeune homme"},
+    {p:"thaamwa",k:"thaamwa",fr:"femme"},
+    {p:"âlô-ak",k:"âlô-ak",fr:"jeune homme"},
+    {p:"âlô-raamwa",k:"âlô-raamwa",fr:"jeune fille"},
+    {p:"aroo-n",k:"aroo-n",fr:"mari, époux"},
+    {p:"â-maawa-n",k:"â-maawa-n",fr:"époux, couple"},
+    {p:"â-mwala-n",k:"â-mwala-n",fr:"frère et sœur"},
+    {p:"â-vaama-n",k:"â-vaama-n",fr:"sœur et frère"},
+    {p:"â-waxi-n",k:"â-waxi-n",fr:"père et fils/fille"},
+    {p:"â-vabuu-n",k:"â-vabuu-n",fr:"grand-père et petit-fils/fille"},
+    {p:"â-beega-n",k:"â-beega-n",fr:"cousins"},
+    {p:"axomoo-n",k:"axomoo-n",fr:"mère, oncle maternel"},
+    {p:"aayo",k:"aayo",fr:"chef"},
+    {p:"aman",k:"aman",fr:"envoyé, messager"},
+    {p:"âbeen",k:"âbeen",fr:"étranger, nouveau"},
+    {p:"whâlirii-n",k:"wââti-n",fr:"oncle maternel"},
+   ],
+   expressions:[
+    {expr:"Elo !",trad:"Oui !"},
+    {expr:"Ai !",trad:"Non !"},
+    {expr:"Ayai !",trad:"Non ! (renforcé)"},
+    {expr:"Au !",trad:"Hélas ! (nostalgie)"},
+    {expr:"aroo-ny",trad:"mon mari"},
+    {expr:"aayo-ny",trad:"mon chef"},
+    {expr:"fo aroo-n",trad:"elle est mariée"},
+   ],
+   differences:[
+    {p:"naan (P)",k:"aawuk (K)",fr:"mouche"},
+    {p:"buburenga (P)",k:"aamwep (K)",fr:"tarpon (poisson)"},
+    {p:"whâlirii-n (P)",k:"wââti-n (K)",fr:"oncle maternel"},
+    {p:"ava-t (P)",k:"abi-t (K)",fr:"côté, flanc"},
+   ],
+   quiz:[
+    {type:"t",q:"Que signifie « aguk » ?",opts:["Chef","Étranger","Homme, personne","Mari"],ans:2},
+    {type:"t",q:"Que signifie « âlô-raamwa » ?",opts:["Jeune homme","Jeune fille","Femme mariée","Enfant"],ans:1},
+    {type:"m",q:"Comment dit-on « chef » ?",opts:["aman","aayo","âbeen","aguk"],ans:1},
+    {type:"m",q:"Comment dit-on « mari » ?",opts:["â-maawa-n","aroo-n","ak","â-mwala-n"],ans:1},
+    {type:"tf",q:"« Âbeen » signifie cousin.",ans:false},
+    {type:"tf",q:"« Â-mwala-n » désigne frère et sœur.",ans:true},
+    {type:"f",q:"âlô-_____ = jeune homme",ans:"ak"},
+    {type:"f",q:"_____ = envoyé, messager",ans:"aman"},
+    {type:"s",q:"Écrivez : « mon chef »",ans:"aayo-ny"},
+    {type:"v",q:"Forme Nixumwak (K) de « naan » (mouche) ?",ans:"aawuk"},
+   ]
+  },
+  {id:2,level:2,title:"Les Verbes d'action",emoji:"⚡",theme:T.foret,
+   cours:"Les verbes se placent après le pronom sujet. « adaxe » = partager, « ap » = rire, « â » = partir, « alu » = regarder attentivement, « aa » = casser. La structure de base est : pronom + verbe (+ objet).",
+   vocabulaire:[
+    {p:"ap",k:"ap",fr:"rire"},
+    {p:"â",k:"â",fr:"partir, s'éloigner"},
+    {p:"alu",k:"alu",fr:"observer, fixer, regarder"},
+    {p:"adaxe",k:"adaxe",fr:"partager"},
+    {p:"aa",k:"aa",fr:"casser, briser"},
+    {p:"aee",k:"aee",fr:"casser (variante)"},
+    {p:"awi",k:"awi",fr:"rire de quelqu'un"},
+    {p:"aya",k:"aya",fr:"sentir, supporter (douleur)"},
+    {p:"âdap",k:"âdap",fr:"être calme"},
+    {p:"alawuk",k:"câlîu",fr:"avoir faim"},
+    {p:"axe",k:"axe",fr:"voir (objet inanimé)"},
+    {p:"axi",k:"axi",fr:"voir, rendre visite (animé)"},
+    {p:"âbwe",k:"âbwe",fr:"dévier, retourner"},
+   ],
+   expressions:[
+    {expr:"i ap",trad:"il rit"},
+    {expr:"i â",trad:"il part"},
+    {expr:"i alu âlô",trad:"il observe les enfants"},
+    {expr:"i adaxe",trad:"il partage"},
+    {expr:"na alawuk",trad:"j'ai faim (Nêlêmwa)"},
+    {expr:"âdap kuru",trad:"il n'y a pas de vent"},
+    {expr:"âdap fwââmwa",trad:"le pays est calme"},
+   ],
+   differences:[
+    {p:"alawuk (P)",k:"câlîu (K)",fr:"avoir faim"},
+    {p:"aa (casser)",k:"aee (var.)",fr:"casser"},
+    {p:"awi (+ animé)",k:"awilî (+ inan.)",fr:"rire de qqn / qqch"},
+   ],
+   quiz:[
+    {type:"t",q:"Que signifie « alu » ?",opts:["Partir","Rire","Observer, fixer","Casser"],ans:2},
+    {type:"t",q:"Que signifie « aya » ?",opts:["Voir","Sentir, supporter","Partager","Calme"],ans:1},
+    {type:"m",q:"Comment dit-on « partager » ?",opts:["ap","adaxe","alu","aa"],ans:1},
+    {type:"m",q:"Comment dit-on « partir » ?",opts:["ap","â","alu","aee"],ans:1},
+    {type:"tf",q:"« Âdap » signifie casser.",ans:false},
+    {type:"tf",q:"« Adaxe » signifie partager.",ans:true},
+    {type:"f",q:"i _____ = il rit",ans:"ap"},
+    {type:"f",q:"_____ = partager",ans:"adaxe"},
+    {type:"s",q:"Écrivez : « il part »",ans:"i â"},
+    {type:"v",q:"Forme Nixumwak (K) de « alawuk » (avoir faim) ?",ans:"câlîu"},
+   ]
+  },
+  {id:3,level:3,title:"Noms d'agents (aa-)",emoji:"🏷️",theme:T.corail,
+   cours:"Le préfixe « aa- » forme des noms d'agent : « celui qui… ». Exemples : aa-kaang = voleur (celui qui vole), aa-hobwak = gardien (celui qui surveille), aa-hoot = orateur.",
+   vocabulaire:[
+    {p:"aa-hobwak",k:"aa-hobwak",fr:"gardien"},
+    {p:"aa-kaang",k:"aa-kaang",fr:"voleur"},
+    {p:"aa-hoot",k:"aa-hoot",fr:"orateur"},
+    {p:"aa-hân",k:"aa-hân",fr:"chasseur"},
+    {p:"aa-oot",k:"aa-oot",fr:"chanteur"},
+    {p:"aa-nap",k:"aa-nap",fr:"menteur"},
+    {p:"aa-shaya",k:"aa-shaya",fr:"serviteur"},
+    {p:"aa-telak",k:"aa-telak",fr:"mendiant"},
+    {p:"aa-palu",k:"aa-palu",fr:"avare"},
+    {p:"aa-pi",k:"aa-pi",fr:"gourmand"},
+    {p:"aa-vhaa",k:"aa-vhaa",fr:"porte-parole, bavard"},
+    {p:"aa-tîlîxâac",k:"aa-tîlîxâac",fr:"coléreux"},
+    {p:"aa-palaic",k:"aa-palaic",fr:"maladroit"},
+    {p:"aa-haxaxa",k:"aa-haxaxa",fr:"peureux"},
+    {p:"aayo",k:"aayo",fr:"chef (aa- + sho bon)"},
+    {p:"aayuup",k:"aayuup",fr:"gros crabe rouge de terre"},
+   ],
+   expressions:[
+    {expr:"aa-hobwak",trad:"gardien"},
+    {expr:"aa-kaang",trad:"voleur"},
+    {expr:"aa-hoot",trad:"orateur"},
+    {expr:"aa-oot",trad:"chanteur"},
+    {expr:"aa-nap",trad:"menteur"},
+   ],
+   differences:[
+    {p:"aa-yhajan",k:"aa-kaang",fr:"voleur (deux formes)"},
+   ],
+   quiz:[
+    {type:"t",q:"Que signifie « aa-hoot » ?",opts:["Chasseur","Orateur","Chanteur","Gardien"],ans:1},
+    {type:"t",q:"Que signifie « aa-oot » ?",opts:["Pêcheur","Gardien","Chanteur","Menteur"],ans:2},
+    {type:"m",q:"Comment dit-on « gardien » ?",opts:["aa-kaang","aa-hobwak","aa-hoot","aa-nap"],ans:1},
+    {type:"m",q:"Comment dit-on « serviteur » ?",opts:["aa-vhaa","aa-shaya","aa-palu","aa-oot"],ans:1},
+    {type:"tf",q:"« Aa-nap » signifie chanteur.",ans:false},
+    {type:"tf",q:"« Aa-hân » signifie chasseur.",ans:true},
+    {type:"f",q:"aa-_____ = voleur",ans:"kaang"},
+    {type:"f",q:"aa-_____ = orateur",ans:"hoot"},
+    {type:"s",q:"Comment dit-on « un avare » ?",ans:"aa-palu"},
+   ]
+  },
+  {id:4,level:4,title:"Les Pronoms",emoji:"🔤",theme:T.gold,
+   cours:"Le Nêlêmwa distingue trois nombres : singulier, duel (exactement 2 personnes) et pluriel. Bases pronominales : ho- (sg), hli- (duel), hla- (pl). Le paradigme déictique de « aguk » illustre cette richesse.",
+   vocabulaire:[
+    {p:"ia",k:"ia",fr:"je (sg)"},
+    {p:"i",k:"i",fr:"il/elle (sg)"},
+    {p:"ara",k:"ara",fr:"nous deux (duel excl.)"},
+    {p:"âboro",k:"âboro",fr:"nous (pl.)"},
+    {p:"ho-",k:"ho-",fr:"base sg"},
+    {p:"hli-",k:"hli-",fr:"base duel"},
+    {p:"hla-",k:"hla-",fr:"base pl."},
+    {p:"aguleny",k:"aguleny",fr:"celui-ci (proche)"},
+    {p:"agux-ena",k:"agux-ena",fr:"celui-là (proche)"},
+    {p:"agux-ali",k:"agux-ali",fr:"celui-là (distance moy.)"},
+    {p:"axaleny",k:"axaleny",fr:"cet homme-ci"},
+    {p:"axeena",k:"axeena",fr:"cet homme-là"},
+   ],
+   expressions:[
+    {expr:"ia â",trad:"je pars"},
+    {expr:"i ap",trad:"il rit"},
+    {expr:"hli pe-alu-i",trad:"ils se regardent (réciproque, duel)"},
+    {expr:"aguleny",trad:"celui-ci"},
+    {expr:"yaman aida",trad:"nous en haut"},
+   ],
+   differences:[
+    {p:"aa (P)",k:"ari (K)",fr:"aspect itératif (encore, à nouveau)"},
+    {p:"ho- (sg)",k:"hli- (duel)",fr:"bases pronominales"},
+   ],
+   quiz:[
+    {type:"t",q:"Que signifie « ara » ?",opts:["Je","Il","Nous deux","Vous"],ans:2},
+    {type:"t",q:"Que signifie « hla- » ?",opts:["Singulier","Duel","Pluriel","Chef"],ans:2},
+    {type:"m",q:"Base pronominale du duel ?",opts:["ho-","hli-","hla-","ia"],ans:1},
+    {type:"tf",q:"Le Nêlêmwa a un pronom duel.",ans:true},
+    {type:"tf",q:"« Hla- » est la base du singulier.",ans:false},
+    {type:"f",q:"_____ â = je pars",ans:"ia"},
+    {type:"v",q:"Forme Nixumwak (K) de l'aspect itératif « aa » (encore) ?",ans:"ari"},
+   ]
+  },
+  {id:5,level:5,title:"Localisation & Espace",emoji:"📍",theme:"#6B3FA0",
+   cours:"La localisation est très développée. Les déictiques « -ali » (distance), « -ena » (proche), « -aida » (en haut/sud), « -maidu » (en bas/nord) s'attachent aux bases. Le préfixe « ara- » indique une surface, un côté vide.",
+   vocabulaire:[
+    {p:"bwa",k:"bwa",fr:"ici"},
+    {p:"xadu",k:"xadu",fr:"là-bas"},
+    {p:"pwi",k:"pwi",fr:"en haut"},
+    {p:"boro",k:"boro",fr:"en bas"},
+    {p:"-ali",k:"-ali",fr:"déict. à distance"},
+    {p:"-aida",k:"-aida",fr:"en haut, au sud"},
+    {p:"-maidu",k:"-maidu",fr:"en bas, au nord"},
+    {p:"awôlô",k:"awôlô",fr:"maison, terroir, chez soi"},
+    {p:"awôlôô-ny",k:"awôlôô-ny",fr:"chez moi"},
+    {p:"ara-hoogo",k:"ara-hoogo",fr:"versant de la montagne"},
+    {p:"ara-maa-t",k:"ara-maa-t",fr:"place du village"},
+    {p:"aramaa fwamwa",k:"aramaa fwamwa",fr:"place du village"},
+    {p:"alibang",k:"alibang",fr:"pente à pic"},
+    {p:"alilaan",k:"alilaan",fr:"espace"},
+    {p:"alar-ali",k:"alar-ali",fr:"de l'autre côté"},
+   ],
+   expressions:[
+    {expr:"i â bwa",trad:"il part ici"},
+    {expr:"i alu xadu",trad:"il regarde là-bas"},
+    {expr:"awôlôô-ny",trad:"chez moi"},
+    {expr:"fwa aida",trad:"le trou là-haut"},
+    {expr:"aramaa fwamwa",trad:"place du village"},
+   ],
+   differences:[
+    {p:"ava-t (P)",k:"abi-t (K)",fr:"côté / quelques"},
+    {p:"bayaxap (P)",k:"bwabwalic (K)",fr:"en travers"},
+   ],
+   quiz:[
+    {type:"t",q:"Que signifie « awôlô » ?",opts:["Pente","Côté","Maison, terroir","Espace"],ans:2},
+    {type:"t",q:"Que signifie « alibang » ?",opts:["Espace","Pente à pic","Côté","Place"],ans:1},
+    {type:"m",q:"Comment dit-on « chez moi » ?",opts:["bwa","awôlôô-ny","xadu","alilaan"],ans:1},
+    {type:"tf",q:"« Boro » signifie en haut.",ans:false},
+    {type:"tf",q:"« Alilaan » signifie espace.",ans:true},
+    {type:"f",q:"i â _____ = il part là-bas",ans:"xadu"},
+    {type:"f",q:"ara-_____ = versant de la montagne",ans:"hoogo"},
+    {type:"s",q:"Écrivez : « chez moi »",ans:"awôlôô-ny"},
+    {type:"v",q:"Forme Nixumwak (K) de « ava-t » (côté) ?",ans:"abi-t"},
+   ]
+  },
+  {id:6,level:6,title:"Les Nombres & Quantité",emoji:"🔢",theme:"#8B4A2B",
+   cours:"Les nombres utilisent le classifieur « axa- > aa- » pour les animés. Le préfixe « au- » forme les multiplicatifs (fois). Le système distingue animés et inanimés.",
+   vocabulaire:[
+    {p:"aaxiik",k:"aaxiik",fr:"un (animé)"},
+    {p:"aaru",k:"aaru",fr:"deux (animés)"},
+    {p:"aaxan",k:"aaxan",fr:"trois (animés)"},
+    {p:"aavaak",k:"aapaak",fr:"quatre (animés)"},
+    {p:"aanem",k:"aanem",fr:"cinq (animés)"},
+    {p:"aanemgiik",k:"aanemgiik",fr:"six (animés)"},
+    {p:"aanemdu",k:"aanemdu",fr:"sept (animés)"},
+    {p:"aanemgaan",k:"aanemgan",fr:"huit (animés)"},
+    {p:"aanembaak",k:"aanembaak",fr:"neuf (animés)"},
+    {p:"aaxi-ak",k:"aaxi-ak",fr:"vingt (litt. un homme)"},
+    {p:"auriik",k:"auriik",fr:"une fois"},
+    {p:"auru",k:"auru",fr:"deux fois"},
+    {p:"auxan",k:"auxan",fr:"trois fois"},
+    {p:"auxoxo",k:"auxoxo",fr:"beaucoup de fois"},
+    {p:"auneda ?",k:"auneda ?",fr:"combien de fois ?"},
+    {p:"aaneda ?",k:"aaneda ?",fr:"combien ? (animés)"},
+   ],
+   expressions:[
+    {expr:"aaru i hli",trad:"deux d'entre eux"},
+    {expr:"aavaak ak",trad:"quatre-vingts (litt. quatre hommes)"},
+    {expr:"auriik",trad:"une fois"},
+    {expr:"auxoxo i na...",trad:"cela fait plusieurs fois que je…"},
+    {expr:"auneda ?",trad:"combien de fois ?"},
+   ],
+   differences:[
+    {p:"aavaak (P)",k:"aapaak (K)",fr:"quatre (animés)"},
+    {p:"aanemgaan (P)",k:"aanemgan (K)",fr:"huit (var. orthographique)"},
+   ],
+   quiz:[
+    {type:"t",q:"Que signifie « aaru » ?",opts:["Un","Deux","Trois","Quatre"],ans:1},
+    {type:"t",q:"Que signifie « auxoxo » ?",opts:["Une fois","Deux fois","Beaucoup de fois","Cinq fois"],ans:2},
+    {type:"m",q:"Comment dit-on « cinq » (animés) ?",opts:["aaxan","aavaak","aanem","aaru"],ans:2},
+    {type:"m",q:"Comment dit-on « une fois » ?",opts:["auru","auriik","auxan","auvaak"],ans:1},
+    {type:"tf",q:"« Aaxiik » signifie un (animé).",ans:true},
+    {type:"tf",q:"« Aavaak » signifie cinq.",ans:false},
+    {type:"f",q:"au-_____ = trois fois",ans:"xan"},
+    {type:"f",q:"_____ ? = combien de fois ?",ans:"auneda"},
+    {type:"v",q:"Forme Nixumwak (K) de « aavaak » (quatre) ?",ans:"aapaak"},
+   ]
+  },
+  {id:7,level:7,title:"Nature & Environnement",emoji:"🌿",theme:"#2D7A4F",
+   cours:"Le vocabulaire de la nature reflète l'environnement de Nouvelle-Calédonie. « at » = soleil, « aut » = houle. Les fruits ont quatre stades : aava (vert), shââlaxak (qui va mûrir), galamià (jaunit), mee (mûr).",
+   vocabulaire:[
+    {p:"at",k:"at",fr:"soleil"},
+    {p:"maale-at",k:"maale-at",fr:"lumière du soleil"},
+    {p:"aut",k:"aut",fr:"houle, onde, sillage"},
+    {p:"alaba",k:"alaba",fr:"braise, charbon"},
+    {p:"amwat",k:"amwat",fr:"arbuste de rivage"},
+    {p:"aamuu",k:"mabo",fr:"guêpe, abeille"},
+    {p:"aarau",k:"aarau",fr:"requin dormeur"},
+    {p:"alaat",k:"alaat",fr:"picot rayé (poisson)"},
+    {p:"aava",k:"aava",fr:"fruit pas mûr, vert"},
+    {p:"mee",k:"mee",fr:"fruit mûr et comestible"},
+    {p:"shââlaxak",k:"shââlaxak",fr:"fruit qui va mûrir"},
+    {p:"galamià",k:"galamià",fr:"fruit qui jaunit"},
+    {p:"ara-bwaa-t",k:"ara-bwaa-t",fr:"crâne"},
+    {p:"ara-wan",k:"ara-wan",fr:"carapace de tortue"},
+    {p:"aningo",k:"aningo",fr:"indigo (plante)"},
+    {p:"aloe",k:"aloe",fr:"agave géant / aloès"},
+    {p:"awaala",k:"awaala",fr:"étoile du matin"},
+   ],
+   expressions:[
+    {expr:"na ni at",trad:"au soleil"},
+    {expr:"aava pwâ-ciiy-ena",trad:"ce fruit est encore vert"},
+    {expr:"na me alabwa-t pwagiik",trad:"donne-moi une demi-noix de coco"},
+   ],
+   differences:[
+    {p:"aamuu (P)",k:"mabo (K)",fr:"guêpe, abeille"},
+    {p:"tha-t (P)",k:"araxa-t (K)",fr:"bouture d'igname/taro"},
+    {p:"naan (P)",k:"aawuk (K)",fr:"mouche"},
+    {p:"buburenga (P)",k:"aamwep (K)",fr:"tarpon (poisson)"},
+   ],
+   quiz:[
+    {type:"t",q:"Que signifie « at » ?",opts:["Lune","Étoile","Soleil","Vent"],ans:2},
+    {type:"t",q:"Que signifie « alaba » ?",opts:["Houle","Braise, charbon","Jonc","Crâne"],ans:1},
+    {type:"m",q:"« Aamuu » en Nêlêmwa (P) = ?",opts:["mabo","aawuk","naan","aarau"],ans:0},
+    {type:"tf",q:"« Mee » désigne un fruit pas mûr.",ans:false},
+    {type:"tf",q:"« Aarau » est un requin dormeur.",ans:true},
+    {type:"f",q:"maale-_____ = lumière du soleil",ans:"at"},
+    {type:"f",q:"ara-_____ = carapace de tortue",ans:"wan"},
+    {type:"v",q:"Forme Nixumwak (K) de « aamuu » (abeille) ?",ans:"mabo"},
+   ]
+  },
+];
+
+const SPECIES=[
+  {fr:"Picot rayé",scientific:"Siganus lineatus",en:"Golden-lined Rabbitfish",
+   p:"alaat",k:"alaat",cat:"🐟 Poissons",
+   desc:"Poisson des lagons et récifs coralliens de Nouvelle-Calédonie. Herbivore, se nourrit d'algues. Taille : jusqu'à 40 cm. Nageoires épineuses venimeuses.",
+   img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Siganus_lineatus.jpg/600px-Siganus_lineatus.jpg",color:T.lagon},
+  {fr:"Requin dormeur",scientific:"Nebrius concolor",en:"Tawny Nurse Shark",
+   p:"aarau",k:"aarau",cat:"🐟 Poissons",
+   desc:"Requin de fond des récifs indo-pacifiques. Nocturne, il se repose le jour sous les coraux. Inoffensif pour l'homme. Peut atteindre 3 m.",
+   img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Nebrius_ferrugineus_-_Maldives.jpg/600px-Nebrius_ferrugineus_-_Maldives.jpg",color:"#5B8DD9"},
+  {fr:"Tarpon indo-pacifique",scientific:"Megalops cyprinoides",en:"Indo-Pacific Tarpon",
+   p:"buburenga (P)",k:"aamwep (K)",cat:"🐟 Poissons",
+   desc:"Grand poisson argenté des eaux côtières et mangroves du Pacifique. Peut sauter hors de l'eau. Reconnaissable à ses grandes écailles et sa mâchoire proéminente.",
+   img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Megalops_cyprinoides.jpg/600px-Megalops_cyprinoides.jpg",color:T.gold},
+  {fr:"Clovisse (bivalve)",scientific:"Donax (Latona) cuneatus",en:"Wedge Clam",
+   p:"aa-kaang (2e sens)",k:"aa-kaang",cat:"🐚 Coquillages",
+   desc:"Petit bivalve triangulaire des plages de sable fin. Métaphore dans le dictionnaire : lors de la cuisson, il « vole » les mollusques des autres coquilles d'où le nom aa-kaang (voleur).",
+   img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Donax_vittatus.jpg/600px-Donax_vittatus.jpg",color:T.corail},
+  {fr:"Œil de chat (coquillage)",scientific:"Turbo petholatus",en:"Tapestry Turban Shell",
+   p:"âlaan",k:"âlaan",cat:"🐚 Coquillages",
+   desc:"Gastéropode aux motifs colorés caractéristiques. Son opercule calcaire vert et brillant est appelé « œil de chat » et utilisé en bijouterie traditionnelle.",
+   img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Turbo_petholatus.jpg/600px-Turbo_petholatus.jpg",color:"#4CAF50"},
+  {fr:"Guêpe / Abeille",scientific:"Polistes olivaceus (Apidés)",en:"Paper Wasp / Bee",
+   p:"aamuu (P)",k:"mabo (K)",cat:"🐝 Insectes",
+   desc:"Hyménoptère social des régions tropicales du Pacifique. Construit des nids en papier mâché (Polistes). Note : en Nêlêmwa (P) = aamuu, en Nixumwak (K) = mabo.",
+   img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Common_wasp_400.jpg/600px-Common_wasp_400.jpg",color:T.gold},
+  {fr:"Arbuste de rivage",scientific:"Myoporum tenuifolium",en:"Boobialla / Waterbush",
+   p:"amwat",k:"amwat",cat:"🌿 Plantes",
+   desc:"Arbuste côtier robuste des rivages du Pacifique. Feuilles étroites, petites fleurs blanches. Résistant au vent et au sel marin. Famille des Myoporacées.",
+   img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Myoporum_insulare.jpg/600px-Myoporum_insulare.jpg",color:T.foret},
+  {fr:"Indigo",scientific:"Indigofera suffruticosa",en:"Guatemalan Indigo",
+   p:"aningo (var. adingo)",k:"aningo",cat:"🌿 Plantes",
+   desc:"Plante légumineuse dont on extrait la teinture bleue indigo. Grappes de petites fleurs roses. Présente dans toutes les régions tropicales. Famille des Papilionacées.",
+   img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Indigofera_suffruticosa.jpg/600px-Indigofera_suffruticosa.jpg",color:"#6B3FA0"},
+  {fr:"Agave géant / Aloès",scientific:"Furcraea foetida",en:"Mauritius Hemp",
+   p:"aloe",k:"aloe",cat:"🌿 Plantes",
+   desc:"Grande plante succulente aux feuilles en rosette pouvant dépasser 2 m. Introduite dans le Pacifique. Utilisée pour ses fibres. Famille des Agavacées.",
+   img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Furcraea_foetida_Habitus.jpg/600px-Furcraea_foetida_Habitus.jpg",color:"#8B4A2B"},
+];
+
+// ══════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════
+let stats=JSON.parse(localStorage.getItem("nk_stats")||"{}");
+let activeLesson=null;
+let quizState={};
+let fromScreen="s-lessons";
+
+function saveStats(){localStorage.setItem("nk_stats",JSON.stringify(stats));}
+
+// ══════════════════════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════════════════════
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ══════════════════════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════════════════════
+function norm(s){return s.trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9\s-]/g,"");}
+function hex2(c){return c+"22";}
+function badge(txt,color){return `<span class="badge" style="background:${color}22;color:${color};border:1px solid ${color}55">${txt}</span>`;}
+function progBar(v,max,color){const p=Math.min(100,Math.round(v/max*100));return `<div class="prog-bar-wrap"><div class="prog-bar-fill" style="width:${p}%;background:${color}"></div></div>`;}
+
+// ══════════════════════════════════════════════════════════════
+// HOME
+// ══════════════════════════════════════════════════════════════
+function renderHome(){
+  const done=(stats.completed||[]).length;
+  document.getElementById('h-done').textContent=done+"/"+LESSONS.length;
+  document.getElementById('h-pts').textContent=stats.totalScore||0;
+
+  const menu=[
+    {ico:"📖",lbl:"Leçons",sub:LESSONS.length+" thèmes",fn:"go('s-lessons')",color:T.lagon},
+    {ico:"🧩",lbl:"Quiz",sub:"Choisir une leçon",fn:"openQuizSel()",color:T.corail},
+    {ico:"🔁",lbl:"Révisions",sub:"Renforce la mémorisation",fn:"go('s-revision')",color:T.foret},
+    {ico:"💬",lbl:"Expressions",sub:"Phrases du quotidien",fn:"renderExprs();go('s-exprs')",color:T.gold},
+    {ico:"🔀",lbl:"Nêlêmwa/Nixumwak",sub:"Toutes variantes (P)/(K)",fn:"renderDiff();go('s-diff')",color:"#6B3FA0"},
+    {ico:"📊",lbl:"Statistiques",sub:"Ta progression",fn:"renderStats();go('s-stats')",color:T.lagonL},
+    {ico:"🔬",lbl:"Faune & Flore",sub:"Photos & noms scientifiques",fn:"renderSpecies();go('s-species')",color:"#2D7A4F"},
+  ];
+  document.getElementById('menu-grid').innerHTML=menu.map(m=>
+    `<button class="menu-btn" onclick="${m.fn}" style="border:1px solid ${m.color}44;">
+      <div class="ico">${m.ico}</div>
+      <div class="lbl" style="color:#FAFAF8">${m.lbl}</div>
+      <div class="sub" style="color:${m.color}">${m.sub}</div>
+    </button>`
+  ).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+// LESSONS LIST
+// ══════════════════════════════════════════════════════════════
+function renderLessons(){
+  const el=document.getElementById('lessons-list');
+  el.innerHTML=LESSONS.map(l=>{
+    const done=(stats.completed||[]).includes(l.id);
+    const sc=(stats.scores||{})[l.id];
+    const scoreHtml=sc?`${progBar(sc.correct,sc.total,l.theme)}<div style="color:${l.theme};font-size:12px;margin-top:5px">${Math.round(sc.correct/sc.total*100)}% de réussite</div>`:'';
+    return `<button class="lesson-card" onclick="openLesson(${l.id})" style="border:1px solid ${done?l.theme+'66':'#ffffff11'};box-shadow:${done?'0 0 20px '+l.theme+'22':'none'}">
+      <div class="lesson-emoji" style="background:${l.theme}22">${l.emoji}</div>
+      <div class="lesson-info">
+        <div class="lesson-title">${badge('Niv.'+l.level,l.theme)}${done?badge('✓',T.foret):''} ${l.title}</div>
+        <div class="lesson-meta">${l.vocabulaire.length} mots · ${l.quiz.length} questions</div>
+        ${scoreHtml}
+      </div>
+      <div style="color:${l.theme};font-size:18px">→</div>
+    </button>`;
+  }).join('');
+}
+
+function openLesson(id){
+  activeLesson=LESSONS.find(l=>l.id===id);
+  fromScreen='s-lessons';
+  renderDetail('cours');
+  go('s-detail');
+}
+function openQuizSel(){
+  fromScreen='s-home';
+  renderLessons();
+  go('s-lessons');
+}
+
+// ══════════════════════════════════════════════════════════════
+// LESSON DETAIL
+// ══════════════════════════════════════════════════════════════
+function renderDetail(tab){
+  const l=activeLesson;
+  const tabs=['cours','vocabulaire','expressions','différences'];
+
+  document.getElementById('detail-header').innerHTML=`
+    <div style="background:linear-gradient(135deg,${l.theme},#0D1F2D);padding:22px 16px 0;position:relative;overflow:hidden;">
+      <svg style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:.05;pointer-events:none" xmlns="http://www.w3.org/2000/svg">
+        <defs><pattern id="kp2" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+          <polygon points="30,5 55,20 55,40 30,55 5,40 5,20" fill="none" stroke="white" stroke-width="1"/>
+          <line x1="30" y1="5" x2="30" y2="55" stroke="white" stroke-width=".5"/>
+          <line x1="5" y1="20" x2="55" y2="40" stroke="white" stroke-width=".5"/>
+          <line x1="55" y1="20" x2="5" y2="40" stroke="white" stroke-width=".5"/>
+        </pattern></defs><rect width="100%" height="100%" fill="url(#kp2)"/>
+      </svg>
+      <div style="position:relative;z-index:1">
+        <button onclick="go('s-lessons')" style="color:rgba(255,255,255,.8);font-size:14px;display:block;margin-bottom:10px;">← Retour</button>
+        <div style="font-size:36px;margin-bottom:6px">${l.emoji}</div>
+        <h2 style="font-family:'Josefin Sans',sans-serif;font-size:22px;color:white;margin-bottom:8px">${l.title}</h2>
+        ${badge('Niveau '+l.level,l.theme)}
+        <div style="display:flex;gap:4px;margin-top:18px;overflow-x:auto;padding-bottom:2px">
+          ${tabs.map(t=>`<button onclick="renderDetail('${t}')" style="flex-shrink:0;padding:8px 13px;border-radius:10px 10px 0 0;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;border:1px solid rgba(255,255,255,.5);${tab===t?'background:white;color:'+l.theme+';opacity:1':'background:transparent;color:white;opacity:.7'}">${t}</button>`).join('')}
+        </div>
+      </div>
+    </div>`;
+
+  const c=document.getElementById('detail-content');
+  if(tab==='cours'){
+    c.innerHTML=`<div style="background:#1A3448;border-radius:14px;padding:18px;margin-bottom:16px;color:#F2E8D5;line-height:1.8;font-size:14px">${l.cours}</div>
+    <button onclick="startQuiz()" style="width:100%;background:linear-gradient(90deg,${l.theme},${l.theme}bb);border:none;border-radius:12px;padding:15px;color:white;font-family:'Josefin Sans',sans-serif;font-weight:700;font-size:15px;letter-spacing:1px">DÉMARRER LE QUIZ →</button>`;
+  } else if(tab==='vocabulaire'){
+    c.innerHTML=`<div class="vocab-head"><span style="color:${l.theme}">● Nêlêmwa (P)</span><span style="color:${l.theme}">● Nixumwak (K)</span><span style="color:${l.theme}">● Français</span></div>`+
+    l.vocabulaire.map((v,i)=>`<div class="vocab-row ${i%2===0?'alt':''}"><span class="vocab-p">${v.p}</span><span class="vocab-k" style="color:${v.k!==v.p?T.corailL:'#777'}">${v.k}</span><span class="vocab-fr">${v.fr}</span></div>`).join('');
+  } else if(tab==='expressions'){
+    c.innerHTML=l.expressions.map(e=>`<div class="expr-card" style="border-left:4px solid ${l.theme}"><span class="expr-word" style="color:${T.lagonL}">${e.expr}</span><span class="expr-trad">${e.trad}</span></div>`).join('');
+  } else {
+    if(!l.differences.length){c.innerHTML='<div style="color:#888;text-align:center;padding:40px">Aucune variante dans cette leçon.</div>';return;}
+    c.innerHTML=`<div class="diff-info">🔀 (P) = Nêlêmwa · (K) = Nixumwak</div>
+    <div class="all-diff-head"><span style="color:${T.lagonL}">● Nêlêmwa (P)</span><span style="color:${T.corailL}">● Nixumwak (K)</span><span style="color:#F2E8D5">● Français</span></div>`+
+    l.differences.map(d=>`<div class="all-diff-row"><span style="color:${T.lagonL};font-weight:700;font-size:13px">${d.p}</span><span style="color:${T.corailL};font-weight:700;font-size:13px">${d.k}</span><span style="color:#F2E8D5;font-size:12px">${d.fr}</span></div>`).join('');
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+// QUIZ ENGINE
+// ══════════════════════════════════════════════════════════════
+function startQuiz(){
+  quizState={lesson:activeLesson,idx:0,score:0,results:[],sel:null,fill:'',shown:false};
+  document.getElementById('quiz-prog').style.background=activeLesson.theme;
+  document.getElementById('quiz-close').onclick=()=>{
+    if(quizState.lesson.id===99)go('s-revision');
+    else go('s-detail');
+  };
+  renderQuiz();
+  go('s-quiz');
+}
+
+function startRevisionQuiz(qs,title,emoji,theme){
+  activeLesson={id:99,title,emoji,theme,quiz:qs,vocabulaire:[],expressions:[],differences:[]};
+  startQuiz();
+}
+
+function renderQuiz(){
+  const {lesson,idx,score,shown,sel,fill}=quizState;
+  const q=lesson.quiz[idx];
+  const total=lesson.quiz.length;
+  const typeLbl={t:"Traduction",m:"Choix multiple",tf:"Vrai / Faux",f:"Compléter",s:"Construire",v:"Nêlêmwa/Nixumwak"};
+
+  document.getElementById('quiz-counter').textContent=(idx+1)+" / "+total;
+  document.getElementById('quiz-pts').textContent=score+" pts";
+  document.getElementById('quiz-prog').style.width=Math.round((idx+1)/total*100)+"%";
+
+  const lastOk=quizState.results.length>0?quizState.results[quizState.results.length-1].ok:null;
+
+  let ansHtml='';
+  if(q.type==='t'||q.type==='m'){
+    ansHtml='<div class="opts-grid">'+q.opts.map((o,i)=>{
+      let cls='opt-btn';
+      if(shown){if(i===q.ans)cls+=' correct';else if(i===sel&&i!==q.ans)cls+=' wrong';}
+      else if(i===sel)cls+=' selected';
+      return `<button class="${cls}" onclick="pickOpt(${i})" ${shown?'disabled':''}><span class="opt-letter" style="color:${lesson.theme}">${String.fromCharCode(65+i)}.</span>${o}</button>`;
+    }).join('')+'</div>';
+  } else if(q.type==='tf'){
+    ansHtml='<div class="tf-grid">'+[true,false].map(v=>{
+      let cls='tf-btn';
+      if(shown){if(v===q.ans)cls+=' correct';else if(v===sel&&v!==q.ans)cls+=' wrong';}
+      else if(v===sel)cls+=' selected';
+      return `<button class="${cls}" onclick="pickTF(${v})" ${shown?'disabled':''}>${v?'✓ VRAI':'✗ FAUX'}</button>`;
+    }).join('')+'</div>';
+  } else {
+    const borderColor=shown?(norm(fill)===norm(q.ans)?T.foret:T.corail):lesson.theme;
+    ansHtml=`<input id="fill-in" class="fill-input ${shown?(norm(fill)===norm(q.ans)?'correct':'wrong'):''}" placeholder="Écrivez votre réponse…" value="${fill}" ${shown?'disabled':''} style="border-color:${borderColor}" oninput="quizState.fill=this.value" onkeydown="if(event.key==='Enter'&&!quizState.shown&&quizState.fill)doCheck()">`;
+    if(shown) ansHtml+=`<div class="fill-answer">Réponse correcte : <strong>${q.ans}</strong></div>`;
+  }
+
+  const feedbackHtml=shown?`<div class="feedback ${lastOk?'ok':'ko'}">${lastOk?'✅ Bonne réponse ! +10 pts':'❌ Ce n\'est pas ça…'}</div>`:'';
+  const btnDisabled=!shown&&sel===null&&!fill?'disabled':'';
+  const btnLabel=shown?(idx+1>=total?'VOIR LES RÉSULTATS':'QUESTION SUIVANTE →'):'VALIDER';
+
+  document.getElementById('quiz-body').innerHTML=`
+    <div style="margin-bottom:12px">${badge(typeLbl[q.type]||q.type,lesson.theme)}</div>
+    <div class="quiz-qbox" style="border:1px solid ${lesson.theme}33"><p class="quiz-q">${q.q}</p></div>
+    ${ansHtml}
+    ${feedbackHtml}
+    <button class="action-btn" onclick="${shown?'nextQ()':'doCheck()'}" ${btnDisabled} style="background:${lesson.theme}">${btnLabel}</button>`;
+}
+
+function pickOpt(i){if(quizState.shown)return;quizState.sel=i;renderQuiz();}
+function pickTF(v){if(quizState.shown)return;quizState.sel=v;renderQuiz();}
+
+function doCheck(){
+  const {lesson,idx,sel,fill}=quizState;
+  const q=lesson.quiz[idx];
+  let ok=false;
+  if(q.type==='t'||q.type==='m') ok=sel===q.ans;
+  else if(q.type==='tf') ok=sel===q.ans;
+  else ok=norm(fill)===norm(q.ans);
+  quizState.results.push({ok,q});
+  if(ok) quizState.score+=10;
+  quizState.shown=true;
+  renderQuiz();
+}
+
+function nextQ(){
+  const {lesson,results}=quizState;
+  if(quizState.idx+1>=lesson.quiz.length){showResult();return;}
+  quizState.idx++;
+  quizState.sel=null;
+  quizState.fill='';
+  quizState.shown=false;
+  renderQuiz();
+}
+
+function showResult(){
+  const {lesson,results,score}=quizState;
+  const total=results.length;
+  const correct=results.filter(r=>r.ok).length;
+  const pct=Math.round(correct/total*100);
+  const grades=[
+    {p:90,lbl:"Excellent !",c:T.foret,e:"🏆"},
+    {p:75,lbl:"Très bien !",c:T.lagon,e:"⭐"},
+    {p:60,lbl:"Bien !",c:T.gold,e:"👍"},
+    {p:0,lbl:"À revoir",c:T.corail,e:"📚"},
+  ];
+  const grade=grades.find(g=>pct>=g.p);
+
+  document.getElementById('res-emoji').textContent=grade.e;
+  document.getElementById('res-grade').textContent=grade.lbl;
+  document.getElementById('res-grade').style.color=grade.c;
+  document.getElementById('res-pct').textContent=pct+'%';
+  document.getElementById('res-pct').style.color=grade.c;
+  document.getElementById('res-sub').textContent=correct+'/'+total+' bonnes réponses · '+score+' pts';
+  document.getElementById('res-list').innerHTML=results.map(r=>`<div class="result-item"><span>${r.ok?'✅':'❌'}</span><span style="color:${r.ok?'#9ef':T.corailL}">${r.q.q.slice(0,55)}…</span></div>`).join('');
+
+  if(lesson.id!==99){
+    stats.totalScore=(stats.totalScore||0)+score;
+    stats.completed=[...new Set([...(stats.completed||[]),lesson.id])];
+    stats.scores={...(stats.scores||{}),[lesson.id]:{correct,total,score}};
+    saveStats();
+    renderHome();
+  }
+
+  document.getElementById('res-done').style.background=grade.c;
+  document.getElementById('res-retry').style.borderColor=lesson.theme;
+  document.getElementById('res-retry').style.color=lesson.theme;
+  document.getElementById('res-retry').onclick=()=>{quizState={lesson,idx:0,score:0,results:[],sel:null,fill:'',shown:false};renderQuiz();go('s-quiz');};
+  document.getElementById('res-done').onclick=()=>{
+    if(lesson.id===99)go('s-revision');
+    else{renderDetail('cours');go('s-detail');}
+  };
+  go('s-result');
+}
+
+// ══════════════════════════════════════════════════════════════
+// EXPRESSIONS
+// ══════════════════════════════════════════════════════════════
+function renderExprs(){
+  const all=LESSONS.flatMap(l=>l.expressions.map(e=>({...e,lesson:l.title,color:l.theme})));
+  document.getElementById('exprs-list').innerHTML=all.map(e=>`
+    <div class="expr-card" style="border-left:4px solid ${e.color}">
+      <div><div class="expr-word" style="color:${e.color}">${e.expr}</div><div class="expr-trad">${e.trad}</div><div class="expr-source">${e.lesson}</div></div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+// DIFFERENCES
+// ══════════════════════════════════════════════════════════════
+function renderDiff(){
+  const all=LESSONS.flatMap(l=>l.differences.map(d=>({...d,lesson:l.title,color:l.theme})));
+  document.getElementById('diff-list').innerHTML=`
+    <div class="diff-info">🔀 (P) = Nêlêmwa · (K) = Nixumwak · Variantes surlignées en orange.</div>
+    <div class="all-diff-head"><span style="color:${T.lagonL}">● Nêlêmwa (P)</span><span style="color:${T.corailL}">● Nixumwak (K)</span><span style="color:#F2E8D5">● Français</span></div>`+
+  all.map(d=>`<div class="all-diff-row" style="border-left:3px solid ${d.color}">
+    <span style="color:${T.lagonL};font-weight:700;font-size:13px">${d.p}</span>
+    <span style="color:${T.corailL};font-weight:700;font-size:13px">${d.k}</span>
+    <div><div style="color:#F2E8D5;font-size:12px">${d.fr}</div><div class="diff-lesson">${d.lesson}</div></div>
+  </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+// STATS
+// ══════════════════════════════════════════════════════════════
+function renderStats(){
+  const done=(stats.completed||[]).length;
+  const scores=stats.scores||{};
+  const totalScore=stats.totalScore||0;
+  const totalWords=LESSONS.reduce((a,l)=>a+l.vocabulaire.length,0);
+  const avgScore=done>0?Math.round(Object.values(scores).reduce((a,s)=>a+(s.correct/s.total*100),0)/done):0;
+
+  document.getElementById('stats-body').innerHTML=`
+    <div class="stats-grid">
+      <div class="stat-card" style="border:1px solid ${T.gold}33"><div class="stat-ico">🏆</div><div class="stat-val" style="color:${T.gold}">${totalScore}</div><div class="stat-lbl">Points totaux</div></div>
+      <div class="stat-card" style="border:1px solid ${T.lagonL}33"><div class="stat-ico">🎯</div><div class="stat-val" style="color:${T.lagonL}">${avgScore}%</div><div class="stat-lbl">Réussite moy.</div></div>
+      <div class="stat-card" style="border:1px solid ${T.foret}33"><div class="stat-ico">📖</div><div class="stat-val" style="color:${T.foret}">${done}/${LESSONS.length}</div><div class="stat-lbl">Leçons finies</div></div>
+      <div class="stat-card" style="border:1px solid ${T.corail}33"><div class="stat-ico">📚</div><div class="stat-val" style="color:${T.corail}">${totalWords}</div><div class="stat-lbl">Mots au dico</div></div>
+    </div>
+    <h3 style="font-family:'Josefin Sans',sans-serif;margin-bottom:12px">Détail par leçon</h3>`+
+  LESSONS.map(l=>{
+    const sc=scores[l.id];
+    const isDone=(stats.completed||[]).includes(l.id);
+    return `<div class="lesson-stat"><div class="lesson-stat-row"><span style="font-weight:600">${l.emoji} ${l.title}</span>${isDone?badge('✓',T.foret):badge('—','#555')}</div>${sc?`${progBar(sc.correct,sc.total,l.theme)}<div style="color:${l.theme};font-size:12px;margin-top:5px">${sc.correct}/${sc.total} · ${Math.round(sc.correct/sc.total*100)}%</div>`:'<div style="color:#555;font-size:13px">Pas encore tenté</div>'}</div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+// REVISION
+// ══════════════════════════════════════════════════════════════
+function renderRevision(){
+  const all=LESSONS.flatMap(l=>l.quiz);
+  const day=all.filter((_,i)=>i%3===0);
+  const week=all.filter((_,i)=>i%3!==0);
+  const modes=[
+    {qs:day,title:"Révision du jour",emoji:"☀️",theme:T.gold,sub:day.length+" questions"},
+    {qs:week,title:"Révision de la semaine",emoji:"📅",theme:T.lagon,sub:week.length+" questions"},
+    {qs:all,title:"Révision générale",emoji:"🌐",theme:T.corail,sub:all.length+" questions"},
+  ];
+  document.getElementById('rev-body').innerHTML=modes.map((r,i)=>`
+    <button class="rev-card" onclick="startRevisionQuiz(modes${i}_qs,'${r.title}','${r.emoji}','${r.theme}')" style="border:1px solid ${r.theme}44">
+      <div class="rev-ico">${r.emoji}</div>
+      <div><div class="rev-title">${r.title}</div><div class="rev-sub" style="color:${r.theme}">${r.sub}</div></div>
+      <div class="rev-arrow" style="color:${r.theme}">→</div>
+    </button>`).join('');
+  // Store qs references globally for onclick
+  window.modes0_qs=day; window.modes1_qs=week; window.modes2_qs=all;
+}
+// Override onclick to use global refs
+function renderRevision(){
+  const all=LESSONS.flatMap(l=>l.quiz);
+  const day=all.filter((_,i)=>i%3===0);
+  const week=all.filter((_,i)=>i%3!==0);
+  window._revDay=day; window._revWeek=week; window._revAll=all;
+  const modes=[
+    {key:"_revDay",title:"Révision du jour",emoji:"☀️",theme:T.gold,sub:day.length+" questions"},
+    {key:"_revWeek",title:"Révision de la semaine",emoji:"📅",theme:T.lagon,sub:week.length+" questions"},
+    {key:"_revAll",title:"Révision générale",emoji:"🌐",theme:T.corail,sub:all.length+" questions"},
+  ];
+  document.getElementById('rev-body').innerHTML=modes.map(r=>`
+    <button class="rev-card" onclick="startRevisionQuiz(window['${r.key}'],'${r.title}','${r.emoji}','${r.theme}')" style="border:1px solid ${r.theme}44">
+      <div class="rev-ico">${r.emoji}</div>
+      <div><div class="rev-title">${r.title}</div><div class="rev-sub" style="color:${r.theme}">${r.sub}</div></div>
+      <div class="rev-arrow" style="color:${r.theme}">→</div>
+    </button>`).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+// SPECIES
+// ══════════════════════════════════════════════════════════════
+function renderSpecies(){
+  const cats=[...new Set(SPECIES.map(s=>s.cat))];
+  document.getElementById('species-list').innerHTML=`
+    <div style="background:#1A344888;border-radius:9px;padding:10px 14px;margin-bottom:14px;color:${T.lagonL};font-size:13px">
+      Espèces identifiées depuis les noms scientifiques du dictionnaire. Appuyez pour voir la photo.
+    </div>`+
+  cats.map(cat=>`
+    <div class="species-cat-label">${cat}</div>`+
+    SPECIES.filter(s=>s.cat===cat).map((sp,_)=>{
+      const idx=SPECIES.indexOf(sp);
+      const imgHtml=sp.img?`<div class="species-img" style="background-image:url('${sp.img}');min-height:80px"></div>`:`<div class="species-img-placeholder" style="background:${sp.color}22">🔬</div>`;
+      return `<button class="species-card" onclick="openSpecies(${idx})" style="border:1px solid ${sp.color}33">
+        ${imgHtml}
+        <div class="species-info">
+          <div class="species-name">${sp.fr}</div>
+          <div class="species-sci">${sp.scientific}</div>
+          <div class="species-words">
+            <span style="color:${T.lagonL};font-size:12px;font-weight:600">${sp.p}</span>
+            <span style="color:#555;font-size:12px">·</span>
+            <span style="color:${T.corailL};font-size:12px;font-weight:600">${sp.k}</span>
+          </div>
+        </div>
+        <div class="species-arrow">→</div>
+      </button>`;
+    }).join('')
+  ).join('');
+}
+
+function openSpecies(idx){
+  const sp=SPECIES[idx];
+  document.getElementById('sp-detail-title').textContent=sp.fr;
+  const imgHtml=sp.img?`<img src="${sp.img}" alt="${sp.fr}" class="species-detail-img" onerror="this.style.display='none'">`:'';
+  document.getElementById('sp-detail-body').innerHTML=`
+    ${imgHtml}
+    <div class="species-detail-body">
+      <div class="species-badges">
+        <span class="badge" style="background:${sp.color}22;color:${sp.color};border:1px solid ${sp.color}44">${sp.cat}</span>
+        <span style="color:#777;font-size:12px;font-style:italic">${sp.scientific}</span>
+      </div>
+      <div class="species-grid">
+        <div><div class="species-grid-lbl" style="color:${T.lagonL}">NÊLÊMWA (P)</div><div class="species-grid-val">${sp.p}</div></div>
+        <div><div class="species-grid-lbl" style="color:${T.corailL}">NIXUMWAK (K)</div><div class="species-grid-val">${sp.k}</div></div>
+        <div style="grid-column:1/-1" class="species-en">EN: ${sp.en}</div>
+      </div>
+      <div class="species-desc-box">${sp.desc}</div>
+      <div class="species-source">Source : Dictionnaire Nêlêmwa–Nixumwak–Français–Anglais</div>
+    </div>`;
+  go('s-species-detail');
+}
+
+// ══════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════
+renderHome();
+renderLessons();
+renderRevision();
+</script>
+</body>
+</html>
